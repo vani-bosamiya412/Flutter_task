@@ -9,38 +9,27 @@ class MoodScreen extends StatefulWidget {
 }
 
 class MoodScreenState extends State {
-  String mood = "";
+  bool isHappy = true;
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
         SizedBox(height: 60,),
-        Text("Current Mood: ${mood.isEmpty ? '' : mood}", style: TextStyle(fontSize: 20),),
+        Text("Current Mood: ", style: TextStyle(fontSize: 20),),
         SizedBox(height: 15),
-
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            GestureDetector(
-              onTap: () {
-                setState(() {
-                  mood = "Happy";
-                });
-              },
-              child: Text("😄", style: TextStyle(fontSize: 30)),
-            ),
-            SizedBox(width: 20,),
-            GestureDetector(
-              onTap: () {
-                setState(() {
-                  mood = "Sad";
-                });
-              },
-              child: Text("😔", style: TextStyle(fontSize: 30)),
-            ),
-          ],
-        )
+        Text(isHappy ? "😄 Happy" : "😔 Sad"),
+        SizedBox(height: 15,),
+        TextButton(onPressed: () {
+          togglemood();
+        }, child: Text("Change Mood")),
       ],
     );
   }
+
+  togglemood() {
+    setState(() {
+      isHappy = !isHappy;
+    });
+  }
+
 }
