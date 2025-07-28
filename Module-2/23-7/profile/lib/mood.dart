@@ -2,6 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class MoodScreen extends StatefulWidget {
+  const MoodScreen({super.key});
+
   @override
   MoodScreenState createState() => MoodScreenState();
 }

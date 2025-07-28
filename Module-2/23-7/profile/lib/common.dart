@@ -15,7 +15,7 @@ class CommonScreen extends StatelessWidget {
       body: Center(
         child: Column(
           children: [
-            profile(),
+            Profile(),
             LikeCount(),
             MoodScreen(),
             Footer()

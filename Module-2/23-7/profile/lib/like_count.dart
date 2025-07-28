@@ -2,6 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class LikeCount extends StatefulWidget {
+  const LikeCount({super.key});
+
   @override
   LikeCountState createState() => LikeCountState();
 }
