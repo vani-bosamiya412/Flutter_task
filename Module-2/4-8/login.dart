@@ -19,7 +19,7 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-            title: Text("Login Form", style: TextStyle(fontSize: 25, color: Colors.white),),
+            title: Text("Login", style: TextStyle(fontSize: 25, color: Colors.white),),
             centerTitle: true,
             backgroundColor: Colors.blueGrey
         ),

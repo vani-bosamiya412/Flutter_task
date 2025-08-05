@@ -8,9 +8,12 @@ class DashboardScreen extends StatefulWidget {
   State<DashboardScreen> createState() => _DashboardScreenState();
 }
 
+enum Payment {cash, online}
+
 class _DashboardScreenState extends State<DashboardScreen> {
   final String phoneNumber = "tel: 9157715024";
   TextEditingController tableNo = TextEditingController();
+  Payment pay = Payment.cash;
 
   bool pizza = false;
   bool burger = false;
@@ -23,8 +26,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
   bool cake = false;
   bool coldDrink = false;
 
-  int total = 0;
-  String bill = "";
+  late int total;
+  late String bill;
 
   _makeCall() async {
     if (!await launchUrl(Uri.parse(phoneNumber))) {
@@ -33,6 +36,16 @@ class _DashboardScreenState extends State<DashboardScreen> {
   }
 
   generateBill() {
+    if(tableNo.text.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Please enter table number")));
+      return;
+    }
+
+    if(!(pizza || burger || coffee || sandwich || pasta || fries || momo || iceCream || cake || coldDrink)) {
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Please select at least one item")));
+      return;
+    }
+
     total = 0;
     bill = "";
 
@@ -206,7 +219,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
               ),
               SizedBox(height: 10,),
               CheckboxListTile(
-                  secondary: Image.asset("assets/cake.jpg"),
+                secondary: Image.asset("assets/cake.jpg"),
                 title: Text("Cake", style: TextStyle(fontSize: 18),),
                 subtitle: Text("Rs. 300", style: TextStyle(fontSize: 15)),
                 value: cake,
@@ -218,7 +231,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
               ),
               SizedBox(height: 10,),
               CheckboxListTile(
-                  secondary: Image.asset("assets/coldDrink.jpg"),
+                secondary: Image.asset("assets/coldDrink.jpg"),
                 title: Text("Cold Drink", style: TextStyle(fontSize: 18),),
                 subtitle: Text("Rs. 25", style: TextStyle(fontSize: 15)),
                 value: coldDrink,
@@ -229,6 +242,31 @@ class _DashboardScreenState extends State<DashboardScreen> {
                 }
               ),
               SizedBox(height: 15,),
+              ListTile(
+                title: Text("Cash"),
+                leading: Radio(
+                    value: Payment.cash,
+                    groupValue: pay,
+                    onChanged: (value) {
+                      setState(() {
+                        pay = value!;
+                      });
+                    }
+                ),
+              ),
+              ListTile(
+                title: Text("Online"),
+                leading: Radio(
+                    value: Payment.online,
+                    groupValue: pay,
+                    onChanged: (value) {
+                      setState(() {
+                        pay = value!;
+                      });
+                    }
+                ),
+              ),
+              SizedBox(height: 10,),
               Center(
                 child: ElevatedButton(
                   onPressed: () {
@@ -239,7 +277,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                   child: Text("Generate Bill", style: TextStyle(fontSize: 18),)
                 ),
               ),
-              SizedBox(height: 15,)
+              SizedBox(height: 15,),
             ],
           ),
         ),
