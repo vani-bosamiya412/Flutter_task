@@ -89,13 +89,15 @@ class _DashboardScreenState extends State<DashboardScreen> {
       bill += "Cold Drink - Rs. 25\n";
       total += 25;
     }
+
+    String paymentMethod = (pay == Payment.cash) ? "Cash" : "Online";
     
     showDialog(
       context: context,
       builder: (context) {
         return AlertDialog(
           title: Text("Bill"),
-          content: Text("Table Number: ${tableNo.text}\n\n$bill\nTotal: Rs. $total", style: TextStyle(fontSize: 18),),
+          content: Text("Table Number: ${tableNo.text}\n\n$bill\nTotal: Rs. $total\n\nPayment Method: $paymentMethod", style: TextStyle(fontSize: 18),),
           actions: [
             TextButton(onPressed: () => Navigator.pop(context), child: Text("OK"))
           ],
@@ -242,29 +244,39 @@ class _DashboardScreenState extends State<DashboardScreen> {
                 }
               ),
               SizedBox(height: 15,),
-              ListTile(
-                title: Text("Cash"),
-                leading: Radio(
-                    value: Payment.cash,
-                    groupValue: pay,
-                    onChanged: (value) {
-                      setState(() {
-                        pay = value!;
-                      });
-                    }
-                ),
-              ),
-              ListTile(
-                title: Text("Online"),
-                leading: Radio(
-                    value: Payment.online,
-                    groupValue: pay,
-                    onChanged: (value) {
-                      setState(() {
-                        pay = value!;
-                      });
-                    }
-                ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Row(
+                    children: [
+                      Radio<Payment>(
+                          value: Payment.cash,
+                          groupValue: pay,
+                          onChanged: (value) {
+                            setState(() {
+                              pay = value!;
+                            });
+                          }
+                      ),
+                      Text("Cash", style: TextStyle(fontSize: 16)),
+                    ],
+                  ),
+                  SizedBox(width: 20,),
+                  Row(
+                    children: [
+                      Radio<Payment>(
+                          value: Payment.online,
+                          groupValue: pay,
+                          onChanged: (value) {
+                            setState(() {
+                              pay = value!;
+                            });
+                          }
+                      ),
+                      Text("Online", style: TextStyle(fontSize: 16)),
+                    ],
+                  ),
+                ],
               ),
               SizedBox(height: 10,),
               Center(
